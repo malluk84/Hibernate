@@ -1,9 +1,12 @@
 package org.example.db;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -19,14 +22,18 @@ public class Movie {
 
 	@ManyToOne
 	private User user;
+	
+	@ManyToMany
+	private List<Badge> badges;
 
 	public Movie() {
 	}
 
-	public Movie(String title, Author author, User user) {
+	public Movie(String title, Author author, User user, List<Badge> badges) {
 		this.title = title;
 		this.author = author;
 		this.user = user;
+		this.badges = badges;
 	}
 
 	public int getId() {
@@ -59,6 +66,14 @@ public class Movie {
 
 	public void setAuthor(Author author) {
 		this.author = author;
+	}
+
+	public List<Badge> getBadges() {
+		return badges;
+	}
+
+	public void setBadges(List<Badge> badges) {
+		this.badges = badges;
 	}
 
 	@Override
