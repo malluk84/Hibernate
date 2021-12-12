@@ -14,7 +14,7 @@ public class Movie {
     @Id
     @GeneratedValue()
     private Integer id;
-    @Column(unique = true)
+//    @Column(unique = true)
     private String title;
     // PRODUCTION_YEAR
     @Column(name = "PRODUCTION_YEAR")
