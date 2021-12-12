@@ -32,17 +32,31 @@ public class App
         kulfon.setNationality("Poland");
         authorDao.add(kulfon);
 
-        EntityDao<Movie> genericMovieDao = new EntityDao<>(hibernateFactory);
-        EntityDao<Author> genericAuthorDao = new EntityDao<>(hibernateFactory);
+        EntityDao<Movie> genericMovieDao = new EntityDao<>(hibernateFactory, Movie.class);
+        EntityDao<Author> genericAuthorDao = new EntityDao<>(hibernateFactory, Author.class);
         Movie psyII = new Movie();
         psyII.setTitle("psy II");
         psyII.setType("dramat");
         genericMovieDao.save(psyII);
 
-        Author author = new Author();
-        author.setName("Monika");
-        author.setSurname("kulfona");
-        genericAuthorDao.save(author);
+        Author monika = new Author();
+        monika.setName("Monika");
+        monika.setSurname("kulfona");
+        genericAuthorDao.save(monika);
+
+        System.out.println("Sample movie get");
+        System.out.println(genericMovieDao.getById(1));
+
+        System.out.println("Sample Author get");
+        System.out.println(genericAuthorDao.getById(1));
+
+        System.out.println(monika);
+        monika.setName("Nie monika");
+        genericAuthorDao.update(monika);
+        System.out.println("PO update:" + genericAuthorDao.getById(monika.getId()));
+
+        genericAuthorDao.delete(monika);
+        System.out.println("DELETE: " + genericAuthorDao.getById(monika.getId()));
 
         hibernateFactory.getSessionFactory().close();
         Thread.sleep(2000);
