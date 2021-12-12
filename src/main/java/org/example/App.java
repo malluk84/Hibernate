@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.dao.AuthorDao;
+import org.example.dao.EntityDao;
 import org.example.dao.MovieDao;
 import org.example.model.Author;
 import org.example.model.Movie;
@@ -30,6 +31,18 @@ public class App
         kulfon.setAge(33);
         kulfon.setNationality("Poland");
         authorDao.add(kulfon);
+
+        EntityDao<Movie> genericMovieDao = new EntityDao<>(hibernateFactory);
+        EntityDao<Author> genericAuthorDao = new EntityDao<>(hibernateFactory);
+        Movie psyII = new Movie();
+        psyII.setTitle("psy II");
+        psyII.setType("dramat");
+        genericMovieDao.save(psyII);
+
+        Author author = new Author();
+        author.setName("Monika");
+        author.setSurname("kulfona");
+        genericAuthorDao.save(author);
 
         hibernateFactory.getSessionFactory().close();
         Thread.sleep(2000);
