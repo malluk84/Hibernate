@@ -59,6 +59,6 @@ public class App
         System.out.println("DELETE: " + genericAuthorDao.getById(monika.getId()));
 
         hibernateFactory.getSessionFactory().close();
-        Thread.sleep(2000);
+//        Thread.sleep(2000);
     }
 }

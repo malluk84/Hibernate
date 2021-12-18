@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "MOVIE_TABLE")
 public class Movie {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 //    @Column(unique = true)
     private String title;
@@ -21,4 +21,7 @@ public class Movie {
     private Integer productionYear;
     private String type;
     private Integer time;
+
+    @OneToOne(mappedBy = "movie")
+    private Reviewer reviewer;
 }
