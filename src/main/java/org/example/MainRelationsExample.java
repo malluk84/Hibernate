@@ -1,7 +1,9 @@
 package org.example;
 
+import org.example.dao.ActroDao;
 import org.example.dao.EntityDao;
 import org.example.dao.ReviewerDao;
+import org.example.model.Actor;
 import org.example.model.Author;
 import org.example.model.Movie;
 import org.example.model.Reviewer;
@@ -14,8 +16,16 @@ public class MainRelationsExample {
         ReviewerDao reviewerDao = new ReviewerDao(hibernateFactory, Reviewer.class);
         EntityDao<Movie> movieDao = new EntityDao<>(hibernateFactory, Movie.class);
         EntityDao<Author> authorDao = new EntityDao<>(hibernateFactory, Author.class);
-        savingOneToOne(reviewerDao, movieDao);
+        ActroDao actorDao = new ActroDao(hibernateFactory);
 
+
+        savingOneToOne(reviewerDao, movieDao);
+        savingOneToMany(movieDao, authorDao);
+
+        hibernateFactory.getSessionFactory().close();
+    }
+
+    private static void savingOneToMany(EntityDao<Movie> movieDao, EntityDao<Author> authorDao) {
         Author author = new Author();
         author.setName("Some");
         author.setSurname("Crazy");
@@ -28,12 +38,10 @@ public class MainRelationsExample {
         psiPatrol.setTitle("pso patrol");
         psiPatrol.setAuthor(author);
 
-      /*  author.setMovieList(List.of(titanic, psiPatrol));*/
+        /*  author.setMovieList(List.of(titanic, psiPatrol));*/
         authorDao.save(author);
         movieDao.save(titanic);
         movieDao.save(psiPatrol);
-
-        hibernateFactory.getSessionFactory().close();
     }
 
     private static void savingOneToOne(ReviewerDao reviewerDao, EntityDao<Movie> movieDao) {
