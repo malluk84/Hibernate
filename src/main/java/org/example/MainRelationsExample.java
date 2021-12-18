@@ -11,6 +11,9 @@ import org.example.model.Reviewer;
 import java.util.List;
 
 public class MainRelationsExample {
+    private static ActroDao actorDao;
+    private static EntityDao<Movie> movieDao;
+
     public static void main(String[] args) {
         HibernateFactory hibernateFactory = new HibernateFactory();
         ReviewerDao reviewerDao = new ReviewerDao(hibernateFactory, Reviewer.class);
@@ -21,8 +24,33 @@ public class MainRelationsExample {
 
         savingOneToOne(reviewerDao, movieDao);
         savingOneToMany(movieDao, authorDao);
+        savingManyToMany(actorDao,movieDao);
 
         hibernateFactory.getSessionFactory().close();
+    }
+
+    private static void savingManyToMany(ActroDao actroDao, EntityDao<Movie> movieDao) {
+        Actor michal = new Actor();
+        michal.setName("Michal");
+        michal.setSurname("Michalski");
+
+        Actor bartek = new Actor();
+        bartek.setName("Bartek");
+        bartek.setSurname("Bartkowiak");
+
+        Movie titanic2 = new Movie();
+        titanic2.setTitle("Titanic II");
+
+        Movie titanic3 = new Movie();
+        titanic3.setTitle("Titanic III");
+
+        titanic2.setActors(List.of(michal,bartek));
+
+        actroDao.save(michal);
+        actroDao.save(bartek);
+        movieDao.save(titanic2);
+        movieDao.save(titanic3);
+
     }
 
     private static void savingOneToMany(EntityDao<Movie> movieDao, EntityDao<Author> authorDao) {
