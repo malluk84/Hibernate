@@ -18,6 +18,8 @@ public class Actor {
     private String name;
     private String surname;
     private Integer yearsOfExperience;
+    @Enumerated(EnumType.STRING)
+    private Rating rating;
 
     @ManyToMany(mappedBy = "actors")
     private List<Movie> movies;
