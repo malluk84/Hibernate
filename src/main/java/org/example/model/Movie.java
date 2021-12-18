@@ -1,6 +1,8 @@
 package org.example.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -8,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Table(name = "MOVIE_TABLE")
 public class Movie {
     @Id
@@ -24,4 +25,12 @@ public class Movie {
 
     @OneToOne(mappedBy = "movie")
     private Reviewer reviewer;
+
+    @ManyToOne
+    private Author author;
+    public String toString() {
+        return "Movie(id=" + this.getId() + ", title=" + this.getTitle() + ", productionYear=" + this.getProductionYear() + ", type=" + this.getType() + ", time=" + this.getTime() + ")";
+    }
+
+
 }
